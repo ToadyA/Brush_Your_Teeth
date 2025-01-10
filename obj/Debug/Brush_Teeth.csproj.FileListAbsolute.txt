@@ -1,0 +1,15 @@
+C:\Users\ToadyA\source\repos\Brush_Teeth\bin\Debug\Brush_Teeth.exe.config
+C:\Users\ToadyA\source\repos\Brush_Teeth\bin\Debug\Brush_Teeth.exe
+C:\Users\ToadyA\source\repos\Brush_Teeth\bin\Debug\Brush_Teeth.pdb
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\Brush_Teeth.csproj.AssemblyReference.cache
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\MainWindow.g.cs
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\App.g.cs
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\Brush_Teeth_MarkupCompile.cache
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\Brush_Teeth_MarkupCompile.lref
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\MainWindow.baml
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\Brush_Teeth.g.resources
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\Brush_Teeth.Properties.Resources.resources
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\Brush_Teeth.csproj.GenerateResource.cache
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\Brush_Teeth.csproj.CoreCompileInputs.cache
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\Brush_Teeth.exe
+C:\Users\ToadyA\source\repos\Brush_Teeth\obj\Debug\Brush_Teeth.pdb
