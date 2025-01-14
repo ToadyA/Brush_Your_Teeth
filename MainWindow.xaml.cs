@@ -21,12 +21,13 @@ namespace Brush_Teeth
     /// Storing a boolean value for whether the user has brushed their teeth, for every calendar day, stored into a dictionary.
     /// </summary>
     public partial class MainWindow : Window {
-        private Dictionary<DateTime, bool> brushingData;
+        private Dictionary<DateTime, byte> brushingData;
+        private int streak = 0;
 
         public MainWindow() 
         {
             InitializeComponent();
-            brushingData = new Dictionary<DateTime, bool>();
+            brushingData = new Dictionary<DateTime, byte>();
             BrushCalendar.SelectedDatesChanged += CalendarChange;
         }
 
@@ -50,32 +51,142 @@ namespace Brush_Teeth
             var selectedDate = BrushCalendar.SelectedDate;
             if (selectedDate.HasValue)
             {
-                if (brushingData.TryGetValue(selectedDate.Value, out bool brushed))
+                if (brushingData.TryGetValue(selectedDate.Value, out byte brushed))
                 {
-                    BrushStatus.Text = brushed ? "Brushed" : "Not Brushed";
+                    Console.WriteLine($"brushed number is {brushingData[selectedDate.Value]}");
+                    if((brushingData[selectedDate.Value] & 8) != 0)
+                    {
+                        BrushStatus.Text = "Morning Brushed, ";
+                    }
+                    else
+                    {
+                        BrushStatus.Text = "Morning Skipped, ";
+                    }
+                    if ((brushingData[selectedDate.Value] & 4) != 0)
+                    {
+                        BrushStatus.Text = BrushStatus.Text + "Swished Mouthwash, ";
+                    }
+                    else
+                    {
+                        BrushStatus.Text = BrushStatus.Text + "Skipped Mouthwash, ";
+                    }
+                    if ((brushingData[selectedDate.Value] & 2) != 0)
+                    {
+                        BrushStatus.Text = BrushStatus.Text + "Night Brushed, ";
+                    }
+                    else
+                    {
+                        BrushStatus.Text = BrushStatus.Text + "Night Skipped, ";
+                    }
+                    if ((brushingData[selectedDate.Value] & 1) != 0)
+                    {
+                        BrushStatus.Text = BrushStatus.Text + "Used Floss.";
+                    }
+                    else
+                    {
+                        BrushStatus.Text = BrushStatus.Text + "Skipped Floss.";
+                    }
                 }
                 else
                 {
                     BrushStatus.Text = "My Teeth!!";
                 }
+
+                UpdateStreak();
+                UpdateCleanerTeeth();
             }
         }
 
-        private void BrushButton_Click(object sender, RoutedEventArgs e)
+        private void BrushMornButton_Click(object sender, RoutedEventArgs e)
         {
             var selectedDate = BrushCalendar.SelectedDate;
             if (selectedDate.HasValue)
             {
-                if (brushingData.TryGetValue(selectedDate.Value, out bool brushed))
+                if (brushingData.TryGetValue(selectedDate.Value, out byte brushed))
                 {
-                    brushingData[selectedDate.Value] = !brushingData[selectedDate.Value];
+                    brushingData[selectedDate.Value] ^= 8;
                 }
                 else
                 {
-                    brushingData[selectedDate.Value] = true;
+                    brushingData[selectedDate.Value] = 8; //there is no value, set Morning Brushed to true.
                 }
                 UpdateBrushingStatus();
             }
         }
+            private void WashButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedDate = BrushCalendar.SelectedDate;
+            bool undoIt = false;
+
+            if (selectedDate.HasValue)
+            {
+                if (brushingData.TryGetValue(selectedDate.Value, out byte brushed))
+                {
+                    brushingData[selectedDate.Value] ^= 4;
+                }
+                else
+                {
+                    brushingData[selectedDate.Value] = 4; //there is no value, set Mouthwashed to true.
+                }
+                UpdateBrushingStatus();
+            }
+        }
+        private void BrushEveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedDate = BrushCalendar.SelectedDate;
+            if (selectedDate.HasValue)
+            {
+                if (brushingData.TryGetValue(selectedDate.Value, out byte brushed))
+                {
+                    brushingData[selectedDate.Value] ^= 2;
+                }
+                else
+                {
+                    brushingData[selectedDate.Value] = 2; //there is no value, set Night Brushed to true.
+                }
+                UpdateBrushingStatus();
+            }
+        }
+        private void FlossButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedDate = BrushCalendar.SelectedDate;
+            if (selectedDate.HasValue)
+            {
+                if (brushingData.TryGetValue(selectedDate.Value, out byte brushed))
+                {
+                    brushingData[selectedDate.Value] ^= 1;
+                }
+                else
+                {
+                    brushingData[selectedDate.Value] = 1; //there is no value, set Flossed to true.
+                }
+                UpdateBrushingStatus();
+            }
+        }
+
+        private int CalculateStreak()
+        {
+            int streak = 0;
+            DateTime today = DateTime.Today;
+            while(brushingData.ContainsKey(today) && ((brushingData[today] & 8) != 0 || (brushingData[today] & 2) != 0))
+            {
+                streak++;
+                today = today.AddDays(-1);
+            }
+            return streak;
+        }
+
+        private void UpdateStreak()
+        {
+            streak = CalculateStreak();
+            StreakStatus.Text = "Streak: " + streak + " days.";
+        }
+
+        private void UpdateCleanerTeeth()
+        {
+            double opacity = Math.Max(0, 60 - (2 * streak)) / 100.0;
+            Yellowed.Opacity = opacity;
+        }
+
     }
 }
