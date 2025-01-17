@@ -30,6 +30,7 @@
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-01-10T06:39:38.253Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
@@ -38,11 +39,12 @@
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\ToadyA\\source\\repos\\Brush_Teeth\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\ToadyA\\source\\repos\\Brush_Teeth\\MainWindow.xaml.cs",
-              "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAJgAAAAAAAAAAAAuwLUAAAA/AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\ToadyA\\source\\repos\\Brush_Teeth\\MainWindow.xaml.cs*",
+              "RelativeToolTip": "MainWindow.xaml.cs*",
+              "ViewState": "AgIAANMAAAAAAAAAAAAqwPEAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-10T06:39:37.744Z",
+              "IsPinned": true,
               "EditorCaption": ""
             }
           ]
