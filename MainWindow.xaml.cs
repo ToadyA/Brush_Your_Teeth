@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Newtonsoft.Json;
+using Microsoft.Win32;
+using System.IO.Ports;
 
 namespace Brush_Teeth
 {
@@ -32,6 +34,9 @@ namespace Brush_Teeth
         private int streak = 0;
         private string streakMessage = "";
         private string pointsMessage = "";
+
+        private bool drags = false;
+        private bool brushy = false;
 
         public MainWindow() 
         {
@@ -76,6 +81,19 @@ namespace Brush_Teeth
             else
             {
                 LoginButton.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void BrushVisibility()
+        {
+            var selectedDate = BrushCalendar.SelectedDate;
+            if (selectedDate.HasValue && selectedDate.Value.Date == DateTime.Today)
+            {
+                Toothbrush.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Toothbrush.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -244,7 +262,7 @@ namespace Brush_Teeth
 
         private void SavePointsData()
         {
-            var data = new { Points = points, LastLoginDate = lastLoginDate };
+            var data = new { Points = points, LastLoginDate = lastLoginDate, Yellowness = Yellowed.Opacity, Brushy = brushy };
             string json = JsonConvert.SerializeObject(data);
             File.WriteAllText(PointsPath, json);
         }
@@ -253,10 +271,24 @@ namespace Brush_Teeth
         {
             if (File.Exists(PointsPath))
             {
-                string json = File.ReadAllText(FilePath);
+                string json = File.ReadAllText(PointsPath);
                 var data = JsonConvert.DeserializeObject<dynamic>(json);
                 points = data.Points;
                 lastLoginDate = data.LastLoginDate;
+
+                if(lastLoginDate != DateTime.Today)
+                {
+                    Yellowed.Opacity = 0.6;
+                    brushy = false;
+                }
+                else
+                {
+                    Yellowed.Opacity = data.Yellowness;
+                    if(data.Brushy != null)
+                    {
+                        brushy = data.Brushy;
+                    }
+                }
             }
         }
 
@@ -274,6 +306,42 @@ namespace Brush_Teeth
                 brushingData = JsonConvert.DeserializeObject<Dictionary<DateTime, byte>>(json) ?? new Dictionary<DateTime, byte>();
             }
         }
+
+        private void ImageButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "Image Files (*.jpg; *.jpeg; *.png)|*.jpg; *.jpeg; *.png"
+            };
+            if(ofd.ShowDialog() == true)
+            {
+                BitmapImage bitmap = new BitmapImage(new Uri(ofd.FileName));
+                ImageDisplay.Source = bitmap;
+            }
+        }
+
+        private void Toothbrush_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Pressed)
+            {
+                var position = e.GetPosition(BrushCanvas);
+                Canvas.SetLeft(Toothbrush, position.X - (Toothbrush.Width / 2)); //grab the toothbrush, it snaps to the middle.
+                Canvas.SetTop(Toothbrush, position.Y - (Toothbrush.Height / 2));
+
+                if(position.X >= 23 && position.X <= 223 && position.Y >= 38 && position.Y <= 238)
+                {
+                    Yellowed.Opacity -= 0.01;
+                    if(Yellowed.Opacity <= 0.1 && brushy == false)
+                    {
+                        points += 50;
+                        MessageBox.Show("Look at that shine!");
+                        SavePointsData();
+                        brushy = true;
+                    }
+                }
+            }
+        }
+
 
     }
 }

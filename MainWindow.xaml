@@ -8,20 +8,24 @@
         Title="MainWindow" Height="600" Width="800">
     <Grid Background="LightGray">
         <Calendar Name="BrushCalendar" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" />
-        <TextBlock Name="Today" Text ="A fine day" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,490,0,0" FontSize="16" Width="232" />
+        <TextBlock Name="Today" Text ="A fine day" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="354,753,0,0" FontSize="16" Width="232" />
 
-        <Button Name="BrushMornButton" Content="Did you brush your teeth this morning?" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,45,578,0" Click="BrushMornButton_Click" />
-        <Button Name="WashButton" Content="Did you use mouthwash today?" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,70,400,0" Click="WashButton_Click" />
-        <Button Name="BrushEveButton" Content="Did you brush your teeth this evening?" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,95,191,0" Click="BrushEveButton_Click" />
-        <Button Name="FlossButton" Content="Did you floss between your teeth today?" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,120,10,0" Click="FlossButton_Click" />
-        <TextBlock Name="BrushStatus" Text="Not Brushed" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,372,0,0" FontSize="16" />
+        <Button Name="BrushMornButton" Content="Did you brush your teeth this morning?" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,12,0" Click="BrushMornButton_Click" FontSize="16" Width="287" />
+        <Button Name="WashButton" Content="Did you use mouthwash today?" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,40,12,0" Click="WashButton_Click" FontSize="16" />
+        <Button Name="BrushEveButton" Content="Did you brush your teeth this evening?" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,70,10,0" Click="BrushEveButton_Click" FontSize="16" />
+        <Button Name="FlossButton" Content="Did you floss between your teeth today?" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,12,0" Click="FlossButton_Click" FontSize="16" />
+        <TextBlock Name="BrushStatus" Text="Not Brushed" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="38,374,0,0" FontSize="16" />
 
-        <!-- Source: https://beverlyhillsortho.com/underbite-before-and-after-bho/ -->
-        <Image x:Name="TeethImage" Source="pack://application:,,,/Brush_Teeth/teeth.jpg" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="1" Stretch="Uniform" Visibility="Visible" />
-        <Image x:Name="Yellowed" Source="pack://application:,,,/Brush_Teeth/yellowed.jpg" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="0.6" Panel.ZIndex="1" Stretch="Uniform" Visibility="Visible" />
-        <TextBlock Name="StreakStatus" Text="Nada" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,389,0,0" FontSize="16" />
+        <Canvas Name="BrushCanvas">
+            <!-- Source: https://beverlyhillsortho.com/underbite-before-and-after-bho/ -->
+            <Image Name="TeethImage" Source="/Brush_Teeth/teeth.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="200" Opacity="1" Stretch="Uniform" Visibility="Visible" Canvas.Left="23" Canvas.Top="38" />
+            <Image Name="Yellowed" Source="/Brush_Teeth/yellowed.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="200" Opacity="0.6" Panel.ZIndex="-1" Stretch="Uniform" Visibility="Visible" Canvas.Left="23" Canvas.Top="38" />
+            <Image Name="Toothbrush" Source="pack://application:,,,/Brush_Teeth/brush.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="50" Canvas.Left="283" Canvas.Top="175" MouseMove="Toothbrush_MouseMove" Visibility="Collapsed" />
+        </Canvas>
 
+        <TextBlock Name="StreakStatus" Text="Nada" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="124,257,0,0" FontSize="16" />
         <Button Name="LoginButton" Content="Login" HorizontalAlignment="Center" VerticalAlignment="Center" Click="LoginButton_Click" Visibility="Collapsed" />
-
+        <Button Name="ImageButton" Content="Upload Teeth!" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ImageButton_Click" RenderTransformOrigin="1.073,0.601" Margin="675,337,0,0" FontSize="16" />
+        <Image Name="ImageDisplay" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="200" Stretch="UniformToFill" StretchDirection="Both" Margin="562,130,0,0" />
     </Grid>
 </Window>
